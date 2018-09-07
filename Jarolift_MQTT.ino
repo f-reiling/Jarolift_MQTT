@@ -600,9 +600,16 @@ void entertx() {
   cc1101.setTxState();
   delay(2);
   rx_time = micros();
-  while (((marcState = cc1101.readStatusReg(CC1101_MARCSTATE)) & 0x1F) != 0x13 && 0x14 && 0x15)
+  marcState = cc1101.readStatusReg(CC1101_MARCSTATE);
+  while (((marcState & 0x1F) != 0x13) && 
+         ((marcState & 0x1F) != 0x14) && 
+         ((marcState & 0x1F) != 0x15))
   {
-    if (micros() - rx_time > 50000) break; // Quit when marcState does not change...
+    marcState = cc1101.readStatusReg(CC1101_MARCSTATE);
+    if (micros() - rx_time > 50000) {
+      Serial.printf("Timeout switching to TX: %02X\n", marcState);
+      break; // Quit when marcState does not change...
+    }
   }
 } // void entertx
 

@@ -65,7 +65,7 @@ CC1101::CC1101(void)
   syncWord[0] = CC1101_DEFVAL_SYNC1;
   syncWord[1] = CC1101_DEFVAL_SYNC0;
   devAddress = CC1101_DEFVAL_ADDR;
-  paTableByte = PA_LowPower;            // Priority = Low power
+  paTableByte = PA_LongDistance;            // Priority = Low power
 }
 
 /**
